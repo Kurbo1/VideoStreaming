@@ -1,0 +1,17 @@
+<html>
+
+<body>
+    <div style="display: inline-block;">
+        <button><a href="/">Home</a></button>
+        <form action="/signout" method="POST">
+            <button type="submit">Sign-Out</button>
+        </form>
+        <div>
+            {% block content %}
+            {% endblock %}
+        </div>
+    </div>
+</body>
+
+
+</html>

@@ -1,0 +1,16 @@
+{% extends 'menubar.html' %}
+
+{% block content %}
+<html>
+
+<body>
+    {% for slideshow in slideshows %}
+        <form action="/slideshow/{{slideshow['name']}}">
+            <button type="submit">{{slideshow["name"]}}</button>
+        </form>
+    {% endfor %}
+</body>
+
+</html>
+
+{% endblock %}

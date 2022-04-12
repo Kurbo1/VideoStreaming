@@ -1,0 +1,36 @@
+{% extends 'menubar.html' %}
+
+{% block content %}
+
+<html>
+
+    <head>
+
+    </head>
+
+
+    <body>
+        <form action="/uploadImage" method="post" enctype="multipart/form-data">
+            <input style="display: none;" name="slideshow" value="{{slideshow}}">
+            <input type="file" name="file">
+            <button type="submit">Upload Image</button>
+        </form>
+        {% for image in images %}
+
+        <img src="/static/slideshows/{{slideshow}}/{{image}}">
+        
+        {% if admin %}
+        <form action="/deleteimage" method="post" enctype="application/x-www-form-urlencoded">
+            <input style="display: none;" name="image" value="{{image}}">
+            <input style="display: none;" name="slideshow" value="{{slideshow}}">
+            <button type="submit">Delete Image</button>
+        </form>
+        {% endif %}
+
+        {% endfor %}
+    </body>
+
+
+</html>
+
+{% endblock %}

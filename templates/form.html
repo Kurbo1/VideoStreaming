@@ -1,13 +1,48 @@
+<!Doctype html>
 <html>
+<title>
+    Video Screening DEEPRUN
+</title>
+
+<head>
+    <link href="{{ url_for('static', filename='styles/style.css') }}" rel="stylesheet" type="text/css" />
+    <script src="/script.js"></script>
+</head>
 
 <body>
-    <form method="POST" enctype="application/x-www-form-urlencoded"> <!-- Need enctype="multipart/form-data" if uploading a file -->
-        <input placeholder="Username" type="text" name="username" id="username">
-        <br>
-        <input placeholder="Password" type="password" name="password" id="password">
-        <br>
-        <input type="submit">
-    </form>
+    <table style="width:100%; height:10%; background-color: white; position: absolute; top: 0; bottom: 100; left: 0; right: 0; border:1px solid black; border-radius: 10px;">
+        <!-- Title measurements and format -->
+        <tr>
+            <td style=" font-size:50px;">Deep Run Video Stream</td>
+        </tr>
+    </table>
+    <br></br>
+    <div style="height: 50%; position: absolute; top: 0; bottom: 0;   left: 0; right: 0; ">
+
+        <!-- Deep Run Video Stream size format -->
+        <div1>
+
+            LOG IN
+
+            <form method="POST" class="center" enctype="application/x-www-form-urlencoded">
+                <table class="center">
+                    <tr>
+                        <th>Username:</th>
+                        <th><input type="text" name="username"></th>
+                    </tr>
+                    <tr>
+                        <th>Password:</th>
+                        <th><input type="text" name="password"></th>
+                        <tr>
+                            <th><input type="submit"></th>
+                        </tr>
+                    </tr>
+                </table>
+            </form>
+
+        </div1>
+    </div>
+
 </body>
 
 </html>

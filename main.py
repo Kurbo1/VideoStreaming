@@ -12,6 +12,7 @@ import serversetup as app
 from subsections.login import login as l
 from subsections.authentication import authentication
 from subsections.slideshow import slideshow
+from werkzeug.utils import secure_filename
 
 # Turns off console logging to clean up data
 log = logging.getLogger('werkzeug')
@@ -51,7 +52,7 @@ def index():
 
 @server.route('/slideshow/<slideshow>')
 def slide(slideshow):
-    return f.render_template('slideshow.html', slideshow = slideshow, images = [i for i in os.listdir("./static/slideshows/"+slideshow+"/")], admin = (accountControl.checkPermission(accountControl.getByID(auth.getCookie(r.cookies.get("authentication"))["accountId"])["username"]) == "admin"))
+    return f.render_template('upload.html', slideshow = slideshow, images = [i for i in os.listdir("./static/slideshows/"+slideshow+"/")], admin = (accountControl.checkPermission(accountControl.getByID(auth.getCookie(r.cookies.get("authentication"))["accountId"])["username"]) == "admin"))
 
 @server.route('/admin')
 def adminPanel():
@@ -76,7 +77,9 @@ def deleteImage():
 @server.route('/uploadImage', methods = ["POST"])
 def uploadImage():
     file = r.files['file']
-    file.save(os.path.join(f'./static/slideshows/{r.form.get("slideshow")}', file.filename))
+    if not file.content_type[0:5] == "image":
+        return 'Invalid File Type'
+    file.save(os.path.join(f'./static/slideshows/{r.form.get("slideshow")}', secure_filename(file.filename)))
     return f.redirect('/slideshow/'+r.form.get("slideshow"))
 
 if __name__ == "__main__":

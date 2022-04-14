@@ -1,0 +1,126 @@
+body {
+    background: #6e64c8;
+    font-family: Courier New;
+    color: blue;
+    align-self: center;
+    color: #757575;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    width: 50%;
+    text-align: center;
+    width: 100%;
+    margin: auto;
+    /*Page background format*/
+}
+
+th1 {
+    color: black;
+    background-color: #ebebeb;
+    border: 1px solid black;
+    border-radius: 25px;
+    width: 100%;
+}
+
+
+/*border format*/
+
+h1 {
+    color: #383ef0;
+    margin: auto;
+    padding: 50px;
+    overflow: hidden;
+    color: 2e41cc;
+    width: auto;
+    height: 50%;
+    font-size: 30px;
+    transition-duration: 200ms;
+    /*Color blue format measurements*/
+}
+
+.h1:hover {
+    color: #09029c;
+    cursor: pointer;
+}
+
+div {
+    color: #757575;
+    display: inline-block;
+    border: 2px solid black;
+    border-radius: 75px;
+    width: 100%;
+    height: 100%;
+    max-width: 650px;
+    padding: 30px 30px;
+    margin: auto;
+    background: #8ba2fe;
+    align: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    /*Color gray, black border, and blue background format measurements*/
+}
+
+div1 {
+    color: #757575;
+    display: inline-block;
+    border: 2px solid black;
+    border-radius: 75px;
+    width: 70%;
+    padding: 50px 70px;
+    background: #ffffff;
+    font-size: 30px;
+}
+
+
+/*Color gray, black border, and white background format measurements*/
+
+div2 {
+    color: #757575;
+    display: inline-block;
+    border: 2px dashed black;
+    border-radius: 75px;
+    width: 80%;
+    height: 80%;
+    padding: 50px 50px;
+    background: #ffffff;
+    font-size: 30px;
+    transition-duration: 200ms;
+}
+
+div2:hover {
+    background: #ddd;
+    cursor: pointer;
+}
+
+
+/*Color gray, black border, and white background format measurements*/
+
+table {
+    color: #757575;
+    display: inline-block;
+    border: 8px #09029c;
+    display: block;
+    padding: 0px 50px;
+    width: 100%;
+    /*Table measurements of color gray and blue border*/
+}
+
+.center {
+    margin-left: 10px;
+    margin-right: auto;
+}
+
+input {
+    margin-bottom: 15px;
+    align-self: center;
+    width: 100%;
+    border: 0px;
+    border-radius: 10px;
+    font-size: larger;
+    text-align: center;
+}
+
+img {
+    width: 100%;
+}

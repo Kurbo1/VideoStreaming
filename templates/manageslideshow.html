@@ -1,0 +1,139 @@
+<html>
+
+<head>
+    <title>Manage Slideshow</title>
+    <style>
+        body {
+            background: #6e64c8;
+            font-family: Courier New;
+            color: blue;
+            align-self: center;
+            color: #757575;
+            display: block;
+            margin-left: auto;
+            margin-right: auto;
+            width: 50%;
+            text-align: center;
+            width: 100%;
+            margin: auto;
+            /*Page background format*/
+        }
+
+        .title {
+            border: 1px solid;
+            border-color: black;
+            background-color: white;
+            width: max-content;
+            margin-left: auto;
+            margin-right: auto;
+            margin-top: 5px;
+            border-radius: 10px;
+            padding: 5px 10px 5px 10px;
+        }
+
+        .uploadTitle {
+            color: #383ef0;
+            margin: auto;
+            padding: 5% 0px 5% 0px;
+            overflow: hidden;
+            color: 2e41cc;
+            width: auto;
+            font-size: 30px;
+            transition-duration: 200ms;
+        }
+
+        .submitButton:hover {
+            color: #09029c;
+            cursor: pointer;
+        }
+
+        .formDiv {
+            color: #757575;
+            display: inline-block;
+            border: 2px solid black;
+            border-radius: 75px;
+            width: 40%;
+            height: auto;
+            padding: 50px 70px;
+            background: #ffffff;
+            font-size: 30px;
+        }
+
+        .div2 {
+            color: #757575;
+            display: inline-block;
+            border: 2px dashed black;
+            border-radius: 75px;
+            width: 80%;
+            padding: 50px;
+            background: #ffffff;
+            font-size: 30px;
+            transition-duration: 200ms;
+        }
+
+        .div2:hover {
+            background: #ddd;
+            cursor: pointer;
+        }
+
+    </style>
+    <script>
+        document.createElement('center');
+
+        function onUpload() {
+            var fileInput = document.getElementById('file');
+            if (fileInput.files.length > 0) {
+                if (fileInput.files[0].type.startsWith('image')) {
+                    document.getElementById('text').innerText = fileInput.files[0].name;
+                    document.getElementById('submit').innerText = "Click to Submit";
+                    return true;
+                } else {
+                    fileInput.remove(0);
+                    document.getElementById('submit').innerText = "";
+                    //alert('Invalid File Type');
+                }
+            }
+            return false;
+        }
+
+        function submitForm() {
+            if (onUpload()) {
+                document.getElementById('form').submit();
+            } else {
+                alert('No file selected');
+            }
+        }
+    </script>
+</head>
+
+<body>
+<h1 class="title">{{ slideshow }}</h1>
+
+<div class="formDiv" id="UploadImage">
+    <h1 class="uploadTitle"> Upload Files </h1>
+    <div class="div2" id="div2" onclick="document.getElementById('file').click();">
+
+        <form id="form" enctype="multipart/form-data" action="/uploadImage" method="post">
+            <p class="uploadButton" id="text">Click to Upload</p>
+            <input style="display: none;" name="slideshow" value="{{slideshow}}">
+            <input accept="image/*" onchange="if (!onUpload()) {alert('Invalid File Type')}" type="file" style="display: none;" id="file" name="file">
+        </form>
+    </div>
+    <h1 class="uploadTitle submitButton" id='submit' onclick="submitForm()">
+        <h1>
+</div>
+
+<div>
+    {% for image in images %}
+
+    <img src="/static/slideshows/{{slideshow}}/{{image}}"> {% if admin %}
+    <form action="/deleteimage" method="post" enctype="application/x-www-form-urlencoded">
+        <input style="display: none;" name="image" value="{{image}}">
+        <input style="display: none;" name="slideshow" value="{{slideshow}}">
+        <button type="submit">Delete Image</button>
+    </form>
+    {% endif %} {% endfor %}
+</div>
+</body>
+
+</html>

@@ -14,15 +14,6 @@ body {
     /*Page background format*/
 }
 
-th1 {
-    color: black;
-    background-color: #ebebeb;
-    border: 1px solid black;
-    border-radius: 25px;
-    width: 100%;
-}
-
-
 /*border format*/
 
 h1 {
@@ -38,6 +29,25 @@ h1 {
     border-radius: 25px;
     /*Color gray and white format measurements*/
 }
+
+.uploadButton {
+    color: #383ef0;
+    margin: auto;
+    padding: 50px;
+    overflow: hidden;
+    color: 2e41cc;
+    width: auto;
+    height: 50%;
+    font-size: 30px;
+    transition-duration: 200ms;
+    /*Color blue format measurements*/
+}
+
+.uploadButton:hover {
+    color: #09029c;
+    cursor: pointer;
+}
+
 
 div {
     color: #757575;

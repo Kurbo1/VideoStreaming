@@ -6,6 +6,32 @@
     <meta name="viewport" content="width=device-width">
     <title>File Upload</title>
     <link href="{{ url_for('static', filename='styles/upload.css')}}" rel="stylesheet" type="text/css" />
+    <style>
+        body {
+            background: #6e64c8;
+            font-family: Courier New;
+            color: blue;
+            align-self: center;
+            color: #757575;
+            display: block;
+            margin-left: auto;
+            margin-right: auto;
+            width: 50%;
+            text-align: center;
+            width: 100%;
+            margin: auto;
+            /*Page background format*/
+        }
+
+        th1 {
+            color: black;
+            background-color: #ebebeb;
+            border: 1px solid black;
+            border-radius: 25px;
+            width: 100%;
+        }
+    </style>
+
     <script type="text/javascript">
         function onUpload(event) {
             var fileInput = document.getElementById('file');
@@ -32,7 +58,8 @@
                 <form id="form" enctype="multipart/form-data" action="/uploadImage" method="post">
                     <p id="text">Click to Upload</p>
                     <input style="display: none;" name="slideshow" value="{{slideshow}}">
-                    <input accept="image/*" onchange="onUpload(event)" type="file" style="display: none;" id="file" name="file">
+                    <input accept="image/*" onchange="onUpload(event)" type="file" style="display: none;" id="file"
+                        name="file">
                 </form>
             </div2>
             <h1 class="h1" id='submit' onclick="document.getElementById('form').submit()">

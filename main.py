@@ -25,8 +25,13 @@ accountControl = l.Login()
 auth = authentication.Authentication()
 slideshows = slideshow.Slideshow()
 
-EXPIRATION_TIME = 120 # Seconds
+# 5 min expiration time
+EXPIRATION_TIME = 300 # Seconds
 SAVE_LOCATION = r".\static"
+
+#Use to copy/paste - checks if user has authorization or not to be at webpage
+#if not auth.checkCookie(r.cookies.get('authentication')):
+#        return f.redirect('/login')
 
 @server.route('/login', methods = ['GET', 'POST'])
 def login():
@@ -46,13 +51,17 @@ def login():
 @server.route('/', methods = ['GET', 'POST'])
 def index():
     if r.method == 'GET':
-        if auth.checkCookie(r.cookies.get('authentication')):
-            return f.render_template('index.html', slideshows = slideshows.getSlideshows())
-        return f.redirect('/login')
+        if not auth.checkCookie(r.cookies.get('authentication')):
+            return f.redirect('/login')
+        return f.render_template('index.html', slideshows = slideshows.getSlideshows())
+        
 
 @server.route('/slideshow/<slideshow>')
 def slide(slideshow):
-    return f.render_template('upload.html', slideshow = slideshow, images = [i for i in os.listdir("./static/slideshows/"+slideshow+"/")], admin = (accountControl.checkPermission(accountControl.getByID(auth.getCookie(r.cookies.get("authentication"))["accountId"])["username"]) == "admin"))
+    if not auth.checkCookie(r.cookies.get('authentication')):
+            return f.redirect('/login')
+    return f.render_template('manageslideshow.html', slideshow = slideshow, images = [i for i in os.listdir("./static/slideshows/"+slideshow+"/")], admin = accountControl.checkPermission(accountControl.getByID(auth.getCookie(r.cookies.get("authentication"))["accountId"])["username"]) == "admin")
+    #return f.render_template('upload.html', slideshow = slideshow, images = [i for i in os.listdir("./static/slideshows/"+slideshow+"/")], admin = (accountControl.checkPermission(accountControl.getByID(auth.getCookie(r.cookies.get("authentication"))["accountId"])["username"]) == "admin"))
 
 @server.route('/admin')
 def adminPanel():
@@ -60,6 +69,10 @@ def adminPanel():
         if accountControl.checkPermission(accountControl.getByID(auth.getCookie(r.cookies.get("authentication"))["accountId"])["username"]) == "admin":
             return "accepted"
     return "not permitted"
+
+@server.route('/upload')
+def up():
+    return f.render_template('upload.html')
 
 @server.route('/signout', methods = ['POST'])
 def signOut():
@@ -83,6 +96,8 @@ def uploadImage():
     return f.redirect('/slideshow/'+r.form.get("slideshow"))
 
 if __name__ == "__main__":
+    for i in auth.getCookies():
+        auth.checkCookie(i["cookie"])
     debug = False
     if debug:
         while True:

@@ -76,6 +76,14 @@
             cursor: pointer;
         }
 
+        img {
+            width: 300px;
+        }
+
+        .imgDiv {
+            display: inline-block;
+            margin: 5px;
+        }
     </style>
     <script>
         document.createElement('center');
@@ -123,16 +131,18 @@
         <h1>
 </div>
 
-<div>
+<div style="margin-right:auto; margin-left:auto;">
     {% for image in images %}
-
+    <div class="imgDiv">
     <img src="/static/slideshows/{{slideshow}}/{{image}}"> {% if admin %}
     <form action="/deleteimage" method="post" enctype="application/x-www-form-urlencoded">
         <input style="display: none;" name="image" value="{{image}}">
         <input style="display: none;" name="slideshow" value="{{slideshow}}">
-        <button type="submit">Delete Image</button>
+        <button style="margin-top: 2px;" type="submit">Delete Image</button>
     </form>
-    {% endif %} {% endfor %}
+    {% endif %}
+    </div>
+    {% endfor %}
 </div>
 </body>
 

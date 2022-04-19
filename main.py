@@ -21,13 +21,13 @@ log.setLevel(logging.ERROR)
 server = f.Flask(__name__)
 r = f.request
 
-accountControl = l.Login()
-auth = authentication.Authentication()
-slideshows = slideshow.Slideshow()
-
 # 5 min expiration time
 EXPIRATION_TIME = 300 # Seconds
 SAVE_LOCATION = r".\static"
+
+accountControl = l.Login()
+auth = authentication.Authentication(EXPIRATION_TIME)
+slideshows = slideshow.Slideshow()
 
 #Use to copy/paste - checks if user has authorization or not to be at webpage
 #if not auth.checkCookie(r.cookies.get('authentication')):

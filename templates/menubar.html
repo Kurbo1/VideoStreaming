@@ -6,9 +6,14 @@
         <form action="/signout" method="POST">
             <button type="submit">Sign-Out</button>
         </form>
+        <table style="width:100%; height:10%; background-color: white; position: absolute; top: 0; bottom: 100; left: 0; right: 0; border:1px solid black; border-radius: 10px;">
+            <!-- Title measurements and format -->
+            <tr>
+                <td style=" font-size:50px;">Deep Run Video Stream</td>
+            </tr>
+        </table>
         <div>
-            {% block content %}
-            {% endblock %}
+            {% block content %} {% endblock %}
         </div>
     </div>
 </body>

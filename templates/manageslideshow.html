@@ -18,7 +18,7 @@
             margin: auto;
             /*Page background format*/
         }
-
+        
         .title {
             border: 1px solid;
             border-color: black;
@@ -30,7 +30,7 @@
             border-radius: 10px;
             padding: 5px 10px 5px 10px;
         }
-
+        
         .uploadTitle {
             color: #383ef0;
             margin: auto;
@@ -41,12 +41,12 @@
             font-size: 30px;
             transition-duration: 200ms;
         }
-
+        
         .submitButton:hover {
             color: #09029c;
             cursor: pointer;
         }
-
+        
         .formDiv {
             color: #757575;
             display: inline-block;
@@ -58,7 +58,7 @@
             background: #ffffff;
             font-size: 30px;
         }
-
+        
         .div2 {
             color: #757575;
             display: inline-block;
@@ -70,16 +70,16 @@
             font-size: 30px;
             transition-duration: 200ms;
         }
-
+        
         .div2:hover {
             background: #ddd;
             cursor: pointer;
         }
-
+        
         img {
             width: 300px;
         }
-
+        
         .imgDiv {
             display: inline-block;
             margin: 5px;
@@ -111,39 +111,48 @@
                 alert('No file selected');
             }
         }
+
+        function remove() {
+            if (window.confirm('Are you sure you want to delete this slideshow? All data will be lost')) {
+                document.getElementById('delete').submit();
+            }
+        }
     </script>
 </head>
 
 <body>
-<h1 class="title">{{ slideshow }}</h1>
-
-<div class="formDiv" id="UploadImage">
-    <h1 class="uploadTitle"> Upload Files </h1>
-    <div class="div2" id="div2" onclick="document.getElementById('file').click();">
-
-        <form id="form" enctype="multipart/form-data" action="/uploadImage" method="post">
-            <p class="uploadButton" id="text">Click to Upload</p>
-            <input style="display: none;" name="slideshow" value="{{slideshow}}">
-            <input accept="image/*" onchange="if (!onUpload()) {alert('Invalid File Type')}" type="file" style="display: none;" id="file" name="file">
-        </form>
-    </div>
-    <h1 class="uploadTitle submitButton" id='submit' onclick="submitForm()">
-        <h1>
-</div>
-
-<div style="margin-right:auto; margin-left:auto;">
-    {% for image in images %}
-    <div class="imgDiv">
-    <img src="/static/slideshows/{{slideshow}}/{{image}}"> {% if admin %}
-    <form action="/deleteimage" method="post" enctype="application/x-www-form-urlencoded">
-        <input style="display: none;" name="image" value="{{image}}">
+    <h1 class="title">{{ slideshow }}</h1>
+    <form id="delete" action="/deleteSlideshow" method="post">
         <input style="display: none;" name="slideshow" value="{{slideshow}}">
-        <button style="margin-top: 2px;" type="submit">Delete Image</button>
+        <button onclick="remove();">Delete Slideshow</button>
     </form>
-    {% endif %}
+    <div class="formDiv" id="UploadImage">
+        <h1 class="uploadTitle"> Upload Files </h1>
+        <div class="div2" id="div2" onclick="document.getElementById('file').click();">
+
+            <form id="form" enctype="multipart/form-data" action="/uploadImage" method="post">
+                <p class="uploadButton" id="text">Click to Upload</p>
+                <input style="display: none;" name="slideshow" value="{{slideshow}}">
+                <input accept="image/*" onchange="if (!onUpload()) {alert('Invalid File Type')}" type="file" style="display: none;" id="file" name="file">
+            </form>
+        </div>
+        <h1 class="uploadTitle submitButton" id='submit' onclick="submitForm()">
+            <h1>
     </div>
-    {% endfor %}
-</div>
+
+    <div style="margin-right:auto; margin-left:auto;">
+        {% for image in images %}
+        <div class="imgDiv">
+            <img src="/static/slideshows/{{slideshow}}/{{image}}"> {% if admin %}
+            <form action="/deleteimage" method="post" enctype="application/x-www-form-urlencoded">
+                <input style="display: none;" name="image" value="{{image}}">
+                <input style="display: none;" name="slideshow" value="{{slideshow}}">
+                <button style="margin-top: 2px;" type="submit">Delete Image</button>
+            </form>
+            {% endif %}
+        </div>
+        {% endfor %}
+    </div>
 </body>
 
 </html>

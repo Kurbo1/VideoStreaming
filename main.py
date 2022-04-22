@@ -31,6 +31,10 @@ slideshows = slideshow.Slideshow()
 #if not auth.checkCookie(r.cookies.get('authentication')):
 #        return f.redirect('/login')
 
+def getAdmin():
+    return accountControl.checkPermission(accountControl.getByID(auth.getCookie(r.cookies.get("authentication"))["accountId"])["username"]) == "admin"
+
+
 @server.route('/login', methods = ['GET', 'POST'])
 def login():
     if r.method == 'POST':
@@ -51,7 +55,7 @@ def index():
     if r.method == 'GET':
         if not auth.checkCookie(r.cookies.get('authentication')):
             return f.redirect('/login')
-        return f.render_template('index.html', slideshows = slideshows.getSlideshows())
+        return f.render_template('index.html', slideshows = slideshows.getSlideshows(), admin = accountControl.checkPermission(accountControl.getByID(auth.getCookie(r.cookies.get("authentication"))["accountId"])["username"]) == "admin")
         
 
 @server.route('/slideshow/<slideshow>')
@@ -60,6 +64,32 @@ def slide(slideshow):
             return f.redirect('/login')
     return f.render_template('manageslideshow.html', slideshow = slideshow, images = [i for i in os.listdir("./static/slideshows/"+slideshow+"/")], admin = accountControl.checkPermission(accountControl.getByID(auth.getCookie(r.cookies.get("authentication"))["accountId"])["username"]) == "admin")
     #return f.render_template('upload.html', slideshow = slideshow, images = [i for i in os.listdir("./static/slideshows/"+slideshow+"/")], admin = (accountControl.checkPermission(accountControl.getByID(auth.getCookie(r.cookies.get("authentication"))["accountId"])["username"]) == "admin"))
+
+@server.route('/view/<slideshow>')
+def showSlide(slideshow):
+    if not auth.checkCookie(r.cookies.get('authentication')):
+        return f.redirect('/login')
+    return f.render_template('SlideshowStream.html', slideshow = slideshow, images = [i for i in os.listdir("./static/slideshows/"+slideshow+"/")], admin = accountControl.checkPermission(accountControl.getByID(auth.getCookie(r.cookies.get("authentication"))["accountId"])["username"]) == "admin")
+
+@server.route('/deleteSlideshow', methods = ["POST"])
+def deleteSlideshow():
+    if not auth.checkCookie(r.cookies.get('authentication')):
+        return f.render_template('login.html')
+    if not getAdmin():
+        return f.abort()
+    
+    slideshows.deleteSlideshow(r.form.get('slideshow'))
+    return f.redirect('/')
+
+@server.route('/createSlideshow', methods = ["POST"])
+def createSlideshow():
+    if not auth.checkCookie(r.cookies.get('authentication')):
+        return f.render_template('login.html')
+    if not getAdmin():
+        return f.abort()
+    
+    slideshows.addSlideshow(r.form.get('slideshow'))
+    return f.redirect('/')
 
 @server.route('/admin')
 def adminPanel():

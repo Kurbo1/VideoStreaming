@@ -102,7 +102,7 @@ def adminPanel():
 def up():
     return f.render_template('upload.html')
 
-@server.route('/signout', methods = ['POST'])
+@server.route('/signout', methods = ['GET', 'POST'])
 def signOut():
     if (auth.checkCookie(r.cookies.get('authentication'))):
         auth.deleteCookie(r.cookies.get('authentication'))
@@ -120,7 +120,8 @@ def uploadImage():
     file = r.files['file']
     if not file.content_type[0:5] == "image":
         return 'Invalid File Type'
-    file.save(os.path.join(f'./static/slideshows/{r.form.get("slideshow")}', secure_filename(file.filename)))
+    filename = secure_filename(auth.getRandomString(69))
+    file.save(os.path.join(f'./static/slideshows/{r.form.get("slideshow")}', secure_filename(filename)))
     return f.redirect('/slideshow/'+r.form.get("slideshow"))
 
 if __name__ == "__main__":

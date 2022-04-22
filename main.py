@@ -1,5 +1,3 @@
-from array import array
-from ast import While
 from http import server
 import flask as f
 import json

@@ -1,11 +1,59 @@
 <html>
 
 <body>
-    {% for slideshow in slideshows %}
-    <form action="/slideshow/{{slideshow['name']}}">
-        <button type="submit">{{slideshow["name"]}}</button>
+    <style>
+        form {
+            width: fit-content;
+            margin: auto;
+            margin-top: 5px;
+            display: inline-block;
+        }
+        
+        button {
+            color: #757575;
+            border: 2px solid black;
+            border-radius: 25px;
+            width: auto;
+            padding: 20px 20px;
+            background: #ffffff;
+            font-size: 20px;
+            transition-duration: 200ms;
+        }
+        
+        button:hover {
+            background: #ddd;
+            cursor: pointer;
+        }
+        
+        div {
+            display: inline;
+        }
+    </style>
+    <script>
+        function newSlideshow() {
+            if (document.getElementById('name').value.length < 1) {
+                alert('Name can not be blank')
+                return
+            } else {
+                document.getElementById('create').submit()
+                return
+            }
+        }
+    </script>
+    <form id="create" action="/createSlideshow" method="post">
+        <input id="name" placeholder="New Slideshow Name" name="slideshow">
+        <button type="button" onclick="newSlideshow()">Create Slideshow</button>
     </form>
-    {% endfor %}
+    <br> {% for slideshow in slideshows %}
+    <div>
+        <form action="/slideshow/{{slideshow['name']}}">
+            <button type="submit">Edit {{slideshow["name"]}}</button>
+        </form>
+        <form action="/view/{{slideshow['name']}}">
+            <button type="submit">View {{slideshow["name"]}}</button>
+        </form>
+        <br>
+    </div>{% endfor %}
 </body>
 
 </html>
